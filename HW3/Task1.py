@@ -4,4 +4,4 @@
 # Наприклад (слово - "Python" а номер символу 3) - "The 3 symbol in 'Python' is 't' ".
 
 a = 'Python'
-print(a[0])
+print(a[0])  nnn
