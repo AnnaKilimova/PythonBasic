@@ -1,9 +1,9 @@
 # Дана довільна строка. Напишіть код, який знайде в ній і віведе на екран кількість слів,
 # які містять дві голосні літери підряд.
 
-string_example = 'My cat and doog clearly like the piig'
+string_example = 'My cat and doog clEarly like the piig'
 
-words = string_example.split()
+words = string_example.lower().split()
 
 vowels = 'aeiouy'
 
