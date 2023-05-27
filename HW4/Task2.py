@@ -27,6 +27,8 @@ for key in shop_dict:
     # finally:
     #     print('end')
     # When we add these blocks we get messages after any key
+    # http: // scrstorage.s3.amazonaws.com / Monosnap_94hrz_2023 - 05 - 27_22 - 01 - 13.
+    # png
 
 
 
