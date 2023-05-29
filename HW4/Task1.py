@@ -9,13 +9,13 @@ vowels = 'aeiouy'
 
 new_words = []
 
-for i in words:
-    for j in i:
-        if j in vowels:
-            if i.find(j) + 1 > (len(i) - 1):
+for word in words:
+    for letter in word:
+        if letter in vowels:
+            if word.find(letter) + 1 > (len(word) - 1):
                 break
-            if i[i.find(j) + 1] in vowels and i.find(j) + 1 < (len(i) - 1):
-                new_words.append(i)
+            if word[word.find(letter) + 1] in vowels and word.find(letter) + 1 < (len(word) - 1):
+                new_words.append(word)
                 break
 print(new_words)
 
