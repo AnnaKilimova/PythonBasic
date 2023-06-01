@@ -22,34 +22,38 @@ while True:
 
     guess_result = '?' * len(word)
 
-    for attempts_quantity in range(len(word)+3):
+    attempts_quantity = len(word)+3
+
+    for attempt_number in range(attempts_quantity):
 
         print(f'guess_result = {guess_result}')
 
         user_letter = input('Enter the letter: ').lower()
 
+        attempts_left = f'You have {(len(word) + 3) - (attempt_number + 1)} more attempts'
+
         if user_letter in entered_letters or user_letter in guessed_letters:
             print('Duplicate!')
             print(f'guess_result = {guess_result}')
-            print(f'You have {(len(word) + 3) - (attempts_quantity + 1)} more attempts')
+            print(attempts_left)
         elif user_letter in word:
             guessed_letters.append(user_letter)
             guess_result = ''.join(['?' if char not in guessed_letters else char for char in word])
             print('Congratulations! You guessed the letter!!!')
             print(f'guess_result = {guess_result}')
-            print(f'You have {(len(word) + 3) - (attempts_quantity + 1)} more attempts')
+            print(attempts_left)
         elif len(user_letter) != 1:
             print('Too long or too short!')
             print(f'guess_result = {guess_result}')
-            print(f'You have {(len(word) + 3) - (attempts_quantity + 1)} more attempts')
+            print(attempts_left)
         elif user_letter not in available_letters:
             print('Unavailable!')
             print(f'guess_result = {guess_result}')
-            print(f'You have {(len(word) + 3) - (attempts_quantity + 1)} more attempts')
+            print(attempts_left)
         elif word.find(user_letter) == -1:
             print('This word does not contain that letter')
             print(f'guess_result = {guess_result}')
-            print(f'You have {(len(word)+3) - (attempts_quantity + 1)} more attempts')
+            print(attempts_left)
 
         entered_letters.add(user_letter)
 
