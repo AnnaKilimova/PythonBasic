@@ -6,14 +6,11 @@
 def dif_action(arg1, arg2):
     a = None
     if (type(arg1) is int or type(arg1) is float) and (type(arg2) is int or type(arg2) is float):
-        a = arg1 * arg2
-        return a
+        return arg1 * arg2
     elif type(arg1) is str and type(arg2) is str:
-        a = arg1 + arg2
-        return a
+        return arg1 + arg2
     else:
-        a = (arg1, arg2)
-        return a
+        return (arg1, arg2)
 
 print(dif_action(3, 3))
 print(dif_action('Hello ', 'world'))

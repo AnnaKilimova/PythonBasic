@@ -9,8 +9,8 @@
 # Для будь-якої відповіді форма слова "рік" має відповідати значенню віку користувача
 # (1 - рік, 22 - роки, 35 - років і тд...). Наприклад :
 
-def result_info(age):
-    result = str(age).find('7')
+age = int(input('Введить свій вік '))
+def year_declination(age):
     years = None
     first_data = (11, 12, 13, 14)
     second_data = (5, 6, 7, 8, 9, 0)
@@ -18,11 +18,17 @@ def result_info(age):
 
     if len(str(age)) > 1 and age % 100 in first_data or age % 10 in second_data:
         years = 'років'
+        return years
     elif age % 10 == 1:
         years = 'рік'
+        return years
     elif age % 10 in third_data:
         years = 'роки'
+        return years
 
+res1 = year_declination(age)
+def result_info(age, years):
+    result = str(age).find('7')
     if age < 7 and result == -1:
         return (f'Тобі ж {age} {years}! Де твої батьки?')
     elif age < 16 and result == -1:
@@ -34,4 +40,4 @@ def result_info(age):
     else:
         return (f'Незважаючи на те, що вам {age} {years}, білетів все одно нема!')
 
-print(result_info(int(input('Введить свій вік '))))
+print(result_info(age, res1))

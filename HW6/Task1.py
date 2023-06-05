@@ -2,7 +2,6 @@
 # Якщо перетворити не вдається функція має повернути 0.
 def conv_float(arg1):
     try:
-        float(arg1)
         return float(arg1)
     except ValueError:
         return 0
