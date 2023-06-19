@@ -16,11 +16,10 @@ print(my_vehicle.definition_of_a_vehicle())
 
 
 class Car(Vehicle):
-    global further_desc
     further_desc = 'land'
 
     def further_description(self):
-        return f'The {self.__class__.__name__} is designed for {further_desc} transport'
+        return f'The {self.__class__.__name__} is designed for {self.further_desc} transport'
 
 
 my_car = Car()
@@ -30,7 +29,6 @@ print(my_car.further_description())
 
 
 class Plane(Car, Vehicle):
-    global further_desc
     further_desc = 'air'
 
 
@@ -40,7 +38,6 @@ print(my_plane.definition_of_a_vehicle())
 print(my_plane.further_description())
 
 class Ship(Plane):
-    global further_desc
     further_desc = 'water'
 
     def add_description(self):
