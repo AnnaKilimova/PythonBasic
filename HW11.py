@@ -19,7 +19,10 @@ class Point:
 
     def __init__(self, x, y):
         # check type (int, float)
-        if (type(x) is int or type(x) is float) and (type(y) is int or type(y) is float):
+        print('__Task1__Point__')
+        point_class_intORfloat_properties_confirmation = (type(x) is int or type(x) is float) and (type(y) is int or type(y) is float)
+        print(f'point_class_intORfloat_properties_confirmation for [{self}] object is {point_class_intORfloat_properties_confirmation}')
+        if point_class_intORfloat_properties_confirmation:
             self.x_coord = x
             self.y_coord = y
 
@@ -50,6 +53,12 @@ class Point:
         # check type Point
         return self.x_coord == other.x_coord and self.y_coord == other.y_coord
 
+    def __add__(self, other):
+        # складываем 2 точки чтоб получить линию
+        print(f'self = {self}')
+        print(f'other = {other}')
+        return Line(self, other)
+
 
 class Line:
     begin_point = None
@@ -59,7 +68,10 @@ class Line:
 
     def __init__(self, begin, end):
         # check type Point
-        if isinstance(begin, Point) and isinstance(end, Point):
+        print('\n__Task2__Line__')
+        line_class_Point_properties_confirmation = isinstance(begin, Point) and isinstance(end, Point)
+        print(f'line_class_Point_properties_confirmation = {line_class_Point_properties_confirmation}')
+        if line_class_Point_properties_confirmation:
             self.begin_point = begin
             self.end_point = end
 
@@ -94,17 +106,22 @@ class Triangle:
 
     def __init__(self, one, two, three):
         # check type Point
-        type_one = type(one) is int or type(one) is float
-        type_two = type(two) is int or type(two) is float
-        type_three = type(three) is int or type(three) is float
-        if type_one and type_two and type_three:
-            self.one_side = one
-            self.two_side = two
-            self.three_side = three
+        print('\n__Task3__Triangle__')
+        triangle_class_Point_properties_confirmation = isinstance(one, Point) and isinstance(two, Point) and isinstance(three, Point)
+        print(f'triangle_class_Point_properties_confirmation = {triangle_class_Point_properties_confirmation}')
+        if triangle_class_Point_properties_confirmation:
+            self.one_side = one.x_coord + one.y_coord
+            self.two_side = two.x_coord + two.y_coord
+            self.three_side = three.x_coord + three.y_coord
+            print(f'Point_one = {one} \nPoint_two = {two} \nPoint_three = {three}')
+
+    def __str__(self):
+        return f'One_side = {self.one_side},  Two_side = {self.two_side},  Three_side = {self.three_side}'
 
     def area(self):
         p_half = 0.5 * (self.one_side + self.two_side + self.three_side)
-        return (p_half * (p_half - self.one_side) * (p_half - self.two_side) * (p_half - self.three_side)) ** 0.5
+        triangle_area = (p_half * (p_half - self.one_side) * (p_half - self.two_side) * (p_half - self.three_side)) ** 0.5
+        return f'Triangle_area = {triangle_area}'
 
 
 """Task3_End"""
@@ -113,10 +130,9 @@ p1 = Point(2, 2)
 p2 = Point(5, 6)
 p3 = Point(9, 2)
 
-line1 = Line(p1, p2)
-line2 = Line(p2, p3)
-line3 = Line(p3, p1)
+line = Line(p1, p2)
+print(line)
 
-triangle = Triangle(line1.length(), line2.length(), line3.length())
-
+triangle = Triangle(p1, p2, p3)
+print(triangle)
 print(triangle.area())
