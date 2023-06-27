@@ -16,6 +16,7 @@ class Frange:
         else:
             raise StopIteration
 
+
 class Frange2D:
 
     my_list = []
