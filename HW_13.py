@@ -1,182 +1,84 @@
+# Подключіться до API НБУ ( документація тут https://bank.gov.ua/ua/open-data/api-dev ), отримайте теперішній курс валют и запишіть його в TXT-файл в такому форматі:
 #  "[дата, на яку актуальний курс]"
 # 1. [назва валюти 1] to UAH: [значення курсу валюти 1]
+# 2. [назва валюти 2] to UAH: [значення курсу валюти 2]
+# 3. [назва валюти 3] to UAH: [значення курсу валюти 3]
+# ...
+# n. [назва валюти n] to UAH: [значення курсу валюти n]
+#
+# опціонально передбачте для користувача можливість обирати дату, на яку він хоче отримати курс
+#
+# P.S.  За можливості зробіть все за допомогою ООП
 
+import datetime
 import requests
-import pprint
-import json
-
-res = requests.request('GET', 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
-
-dirty_text = res.text.split('\n,')
-
-possible = '",:'
-
-my_list = []
-
-for elements in range(1, len(dirty_text) - 1):
-    correct_elements = ''
-    for symbols in range(0, len(dirty_text[elements])):
-        if dirty_text[elements][symbols].isalnum() or dirty_text[elements][symbols] in possible:
-            correct_elements += dirty_text[elements][symbols]
-    my_list.append(correct_elements.split(','))
-# print(my_list)
-
-squares = {}
-my_count = -1
-squares_in = {}
-
-for k in my_list:
-    # print(k[0])
-    my_count += 1
-    for a in range(0, len(my_list)):
-        for i in k:
-            # print(i)
-            in_dict = i.split(':')
-            squares_in[in_dict[0]] = in_dict[1]
-            squares[my_count] = squares_in
+from datetime import date
 
 
-print(f'squares = {squares}')
-print(f'type(squares) = {type(squares)}')
+a = input('Day __: ')
+b = input('Month __: ')
+c = input('Year 20__: ')
 
-for key, value in squares.items():
-    print(key, '->', value)
-    # print(f'type(key) = {type(key)}')
-    # print(f'type(value) = {type(value)}')
-
-
-
-# my_list = ['"r030":959,"txt":"Золото","rate":6967635,"cc":"XAU","exchangedate":"03072023"']
-# new_list = my_list[0].split(',')
-# print(f'len(my_list) = {len(my_list)}')
-#
-# squares = {}
-# my_count = -1
-# squares_in = {}
-
-# for a in range(0, len(my_list)):
-#     my_count += 1
-#     for i in new_list:
-#         in_dict = i.split(':')
-#         squares_in[in_dict[0]] = in_dict[1]
-#         squares[my_count] = squares_in
-#
-#
-# print(f'squares = {squares}')
-# print(f'type(squares) = {type(squares)}')
-#
-# for key, value in squares.items():
-#     print(key, '->', value)
-#     print(f'type(key) = {type(key)}')
-#     print(f'type(value) = {type(value)}')
+try:
+    my_date = date(day=int(a), month=int(b), year=int(c))
+except (TypeError, AttributeError, ValueError):
+    my_date = 'Try again'
+    print(my_date)
 
 
+class CreationList:
+    def __init__(self, x, my_list1, my_list2, my_list3):
+        self.res_x = requests.request('GET', x)
+        self.txt_list = my_list1
+        self.rate_list = my_list2
+        self.exchangedate_list = my_list3
 
-# for elements in range(1, len(dirty_text) - 1):
-#     correct_elements = ''
-#     for symbols in range(0, len(dirty_text[elements])):
-#         if dirty_text[elements][symbols].isalnum() or dirty_text[elements][symbols] in possible:
-#             correct_elements += dirty_text[elements][symbols]
-#     my_list.append(correct_elements.split(','))
-# print(my_list[0][0])
-# print(type(my_list[0][0]))
+        new_data = self.res_x.json()
 
-#
-# new_list = []
-#
-# for i in my_list:
-#     new_list = i.split(',')
-#     print(new_list)
+        count = 0
 
+        for i in new_data:
+            for key, value in new_data[count].items():
+                if key == 'txt':
+                    my_list1.append(value)
+                elif key == 'rate':
+                    my_list2.append(value)
+                elif key == 'exchangedate':
+                    try:
+                        if type(my_date) is datetime.date and str(my_date.year)[:2] == '20' and len(str(my_date.year)) == 4:
+                            my_list3.append(my_date)
+                        else:
+                            my_list3.append(value)
+                    except AttributeError:
+                        print('Incorrect year')
 
+            count += 1
 
-# new_list = []
-# my_set = set()
-#
-# for i in my_list:
-#     new_list.append(i.split(','))
-# print(new_list)
-
-# for i in my_set:
-#     my_set = set(i)
-#     print(my_set)
-
-
-# squares = {}
-# my_count = -1
-#
-# for i in my_list:
-#     my_count += 1
-#     my_str = '{' + i + '}'
-#     squares[my_count] = my_str
-#
-# for key, value in squares.items():
-#     print(key, '->', value)
-#     print(type(key))
+    def __str__(self):
+        return f'Lists: {self.res_x} {self.txt_list} {self.rate_list}'
 
 
-# squares = {}
-# my_count = -1
-# for i in my_list:
-#     my_count += 1
-#     my_str = '{' + i + '}'
-#     squares[my_count] = my_str
-#
-# for key, value in squares.items():
-#     print(key, '->', value)
-#     print(type(key))
+class CreationDoc:
+    def __init__(self, my_list0, my_list1, my_list2, my_list3):
+        self.my_list = my_list0
+        self.res_x = my_list1
+        self.txt_list = my_list2
+        self.rate_list = my_list3
+
+        for k in range(0, len(my_list1)):
+            my_str = f'{my_list1[k]}\n {k+1}. [{my_list2[k]}] to UAH: [{my_list3[k]}]\n'
+            my_list0.append(my_str)
+
+    def __str__(self):
+        return f'my_list = {self.my_list}'
 
 
-    # key[value] = json.loads(value)
+creation_list = CreationList('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json', [], [], [])
 
+creation_doc = CreationDoc([], creation_list.exchangedate_list, creation_list.txt_list, creation_list.rate_list)
 
+print(creation_doc)
 
-# print(squares)
-# print(type(squares[0]))
-
-
-# squares = {}
-#
-# squares[0] = 0
-# squares[1] = 1
-# squares[2] = 4
-# squares[3] = 9
-# squares[4] = 16
-# squares[5] = 25
-
-
-
-
-
-
-# my_str = '{' + my_list[0] + '}'
-# my_dict = json.loads(my_str)
-# keys = ['r030', 'cc']
-#
-# for key in keys:
-#     my_dict.pop(key, None)
-# print(my_dict)
-
-
-
-
-
-
-
-
-
-# a = res.text
-# b = a.split('\n,')
-# print(len(b))
-#
-# possible = '",:'
-#
-# my_list = []
-#
-# for i in range(1, len(b) - 1):
-#     new_b = ''
-#     for j in range(0, len(b[i])):
-#         if b[i][j].isalnum() or b[i][j] in possible:
-#             new_b += b[i][j]
-#     my_list.append(new_b)
-# print(my_list)
+with open('my.txt_new', 'w') as file:
+    for h in creation_doc.my_list:
+        file.write(h)
